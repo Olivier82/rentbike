@@ -1,0 +1,179 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto-Black.ttf') format('truetype');
+    src: url('/fonts/Roboto-Black-webfont.woff') format('woff');
+    src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+    src: url('/fonts/Roboto-Bold-webfont.woff') format('woff');
+    src: url('/fonts/Roboto-Medium.ttf') format('truetype');
+    src: url('/fonts/Roboto-Medium-webfont.woff') format('woff');
+    src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2 {
+    font-family: 'Roboto-Bold', Arial, Helvetica, sans-serif;
+    color: #C33A5A;
+}
+
+.bg-light {
+    background-color: #69ba37!important;
+}
+
+/*** NAVIGATION ***/
+
+.navbar-light .navbar-nav .active>.nav-link {
+    color: #C33A5A;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #C33A5A;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+    font-family: 'Roboto-Bold', Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+}
+
+/*** CAROUSEL ***/
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    width: 20px;
+    height: 20px;
+}
+
+
+.carousel-caption {
+    margin-bottom: 22rem;
+}
+
+.carousel-caption h3 {
+    font-size: 3rem;
+}
+
+.carousel-caption p {
+    font-size: 1.2rem;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    cursor: pointer;
+}
+
+/*** RESERVATION ***/
+
+.rent {
+    margin: 2rem;
+}
+
+.rent h2 {
+    font-family: 'Roboto-Bold', Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.rent-info {
+    margin-left: 2rem;
+    border: 2px dashed #C33A5A;
+}
+
+.title-rent {
+    font-family: 'Roboto-Bold', Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    color: #C33A5A;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.subtitle-rent {
+    font-family: 'Roboto-Bold', Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    color: #69ba37;
+}
+
+#name_station, #adress_station, #status_station, #bike_stands, #avaibles_bikes {
+    font-family: 'Roboto-Medium', Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+}
+
+.form-info {
+    padding-top: 2rem;
+}
+
+.form-control {
+    border: 1px solid #69ba37;
+    height: 2.2rem;
+}
+
+.identity {
+    font-family: 'Roboto-Regular', Arial, Helvetica, sans-serif;
+    font-size: 1.1rem;
+}
+
+.btn-validation {
+    background-color: #C33A5A;
+    font-size: 1rem;
+    padding: 0.5em 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 1rem 1rem;
+}
+
+.btn-validation:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/*** CANVAS ***/
+
+.reservation {
+    background: #e3e3e3;
+    display: none;
+}
+
+.reservation h2 {
+    font-family: 'Roboto-Bold', Arial, Helvetica, sans-serif;
+    font-size: 2.5rem;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+#canvas {
+    border: 2px solid #69ba37;
+    margin-bottom: 1.5rem;
+}
+
+.btn-reserve {
+    background-color: #C33A5A;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 1rem 1rem;
+}
+
+.btn-reserve:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn-reset {
+    background-color: #9e9d9d;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 1rem 1rem;
+}
+
+.btn-reset:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
