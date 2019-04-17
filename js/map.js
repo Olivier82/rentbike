@@ -35,7 +35,6 @@ const VeloMap = {
     // Affichage du Canvas
     this.validationButton.addEventListener('click', () => {
       this.canvas = new Canvas();
-      document.querySelector('.reservation').style.display = 'block';
     });
 
     this.markerVelo();

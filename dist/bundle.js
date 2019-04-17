@@ -111,7 +111,7 @@ function () {
     this.canvasNode = document.getElementById('canvas');
     this.ctx = this.canvasNode.getContext('2d'); //récupère le contexte de l'objet
 
-    this.ctx.clearRect(0, 0, 600, 300);
+    this.ctx.clearRect(0, 0, 350, 300);
     this.started = false;
     this.paint = false;
     this.prevCursorX = undefined;
@@ -129,8 +129,8 @@ function () {
       this.canvasNode.addEventListener('mousedown', function (e) {
         _this.ctx.beginPath();
 
-        var cursorX = e.pageX - _this.canvasNode.offsetLeft;
-        var cursorY = e.pageY - _this.canvasNode.offsetTop;
+        var cursorX = e.clientX - _this.canvasNode.offsetLeft;
+        var cursorY = e.clientY - _this.canvasNode.offsetTop;
 
         _this.ctx.moveTo(cursorX, cursorY);
 
@@ -154,8 +154,8 @@ function () {
     key: "drawLine",
     value: function drawLine(event) {
       if (this.paint) {
-        var cursorX = event.pageX - this.canvasNode.offsetLeft;
-        var cursorY = event.pageY - this.canvasNode.offsetTop;
+        var cursorX = event.clientX - this.canvasNode.offsetLeft;
+        var cursorY = event.clientY - this.canvasNode.offsetTop;
         this.ctx.quadraticCurveTo(this.prevCursorX, this.prevCursorY, cursorX, cursorY);
         this.ctx.strokeStyle = '#000000';
         this.ctx.lineWidth = '3';
@@ -169,7 +169,7 @@ function () {
     key: "redraw",
     // Réinitialisation du canvas
     value: function redraw() {
-      this.ctx.clearRect(0, 0, 600, 300);
+      this.ctx.clearRect(0, 0, 350, 300);
     }
   }]);
 
@@ -251,7 +251,6 @@ var VeloMap = {
 
     this.validationButton.addEventListener('click', function () {
       _this.canvas = new _canvas__WEBPACK_IMPORTED_MODULE_1__["default"]();
-      document.querySelector('.reservation').style.display = 'block';
     });
     this.markerVelo();
   },
@@ -11562,7 +11561,7 @@ module.exports.setLogLevel = function(level) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/olivier/Sites/oc/rentbike/node_modules/webpack-dev-server/client/index.js?http://localhost:8080 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080");
+__webpack_require__(/*! C:\Users\olivi\Desktop\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8080 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080");
 module.exports = __webpack_require__(/*! ./js/main.js */"./js/main.js");
 
 

@@ -2,7 +2,7 @@ export default class Canvas {
   constructor() {
     this.canvasNode = document.getElementById('canvas');
     this.ctx = this.canvasNode.getContext('2d'); //récupère le contexte de l'objet
-    this.ctx.clearRect(0, 0, 600, 300);
+    this.ctx.clearRect(0, 0, 350, 300);
     this.started = false;
     this.paint = false;
     this.prevCursorX = undefined;
@@ -55,6 +55,6 @@ export default class Canvas {
 
   // Réinitialisation du canvas
   redraw() {
-    this.ctx.clearRect(0, 0, 600, 300);
+    this.ctx.clearRect(0, 0, 350, 300);
   }
 }
