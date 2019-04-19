@@ -77,55 +77,70 @@
         </div>
         <!--SECTION LOCATION VELO-->
         <div class="rent" id="rent">
-            <div class="container-fluid">
+                <div class="container-fluid">
+                    <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h2 class="section-title mb-4">Louer un vélo</h2>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                            <div id="map"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 cl-lg-3 rent-info">
+                                <fieldset>
+                                    <legend class="title-rent">Détails de la station</legend>
+                                    <p class="subtitle-rent">Nom de la station :</p>
+                                    <p id="name_station">Aucun élèment</p>
+                                    <p class="subtitle-rent">Adresse de la station : </p>
+                                    <p id="adress_station">Aucun élément</p>
+                                    <p class="subtitle-rent">Statut de la Station</p>
+                                    <p id="status_station">Aucun élèment</p>
+                                    <p id="bike_stands"></p>
+                                    <p id="avaibles_bikes"></p>
+                                    <div class="form-group row form-info">
+                                        <label for="name" class="col-sm-2 col-form-label identity">Nom</label>
+                                        <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Votre Nom">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lastnale" class="col-sm-2 col-form-label identity">Prénom</label>
+                                        <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Votre Prénom">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10">
+                                            <a href="#reserve" type="submit" class="btn-validation">Signer</a>
+                                        </div>
+                                    </div>
+                                    </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <!--SECTION RESERVATION-->
+        <div class="reserve" id="reserve">
+            <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <h2 class="section-title mb-4">Louer un vélo</h2>
+                        <h2 class="section-title mb-4">Réservation</h2>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                        <div id="map"></div>
+                    <div class="col-6">
+                        <canvas id="canvas" width="500" heigth="300"></canvas>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-3 cl-lg-3 rent-info">
-                        <fieldset>
-                        <legend class="title-rent">Détails de la station</legend>
-                            <p class="subtitle-rent">Nom de la station :</p>
-                            <p id="name_station">Aucun élèment</p>
-                            <p class="subtitle-rent">Adresse de la station : </p>
-                            <p id="adress_station">Aucun élément</p>
-                            <p class="subtitle-rent">Statut de la Station</p>
-                            <p id="status_station">Aucun élèment</p>
-                            <p id="bike_stands"></p>
-                            <p id="avaibles_bikes"></p>
-                            <div class="form-group row form-info">
-                                <label for="name" class="col-sm-2 col-form-label identity">Nom</label>
-                                <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="Votre Nom">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                    <label for="lastnale" class="col-sm-2 col-form-label identity">Prénom</label>
-                                    <div class="col-sm-8">
-                                    <input type="text" class="form-control" placeholder="Votre Prénom">
-                                    </div>
-                                </div>
-                            <div class="form-group row">
-                                <div class="col-sm-10">
-                                    <a href="#reservation" type="submit" class="btn-validation">Valider</a>
-                                </div>
-                            </div>
-                            <div class="col-sm-10">
-                                <canvas id="canvas" width="350" heigth="300"></canvas>
-                            </div>
-                            <div class="col-sm-10">
-                                <a href="#" type="submit" class="btn-reserve">Réserver</a>
-                                <a href="#" type="submit" class="btn-reset">Annuler</a>
-                            </div>
-                        </fieldset>
+                </div>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <a href="#" type="submit" class="btn-reserve">Réserver</a>
+                        <a href="#" type="submit" class="btn-reset">Annuler</a>
                     </div>
                 </div>
             </div>
+        </div>
         <!-- JAVASCRIPT ET JQUERY-->
         <script src="dist/bundle.js"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUxOoLfXI3uZyJFWi4dz-ed_GaFGf5AY&callback=initMap" type="text/javascript"></script>

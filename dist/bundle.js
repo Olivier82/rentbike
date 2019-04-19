@@ -111,7 +111,7 @@ function () {
     this.canvasNode = document.getElementById('canvas');
     this.ctx = this.canvasNode.getContext('2d'); //récupère le contexte de l'objet
 
-    this.ctx.clearRect(0, 0, 350, 300);
+    this.ctx.clearRect(0, 0, canvasNode.width, canvasNode.height);
     this.started = false;
     this.paint = false;
     this.prevCursorX = undefined;
@@ -169,7 +169,7 @@ function () {
     key: "redraw",
     // Réinitialisation du canvas
     value: function redraw() {
-      this.ctx.clearRect(0, 0, 350, 300);
+      this.ctx.clearRect(0, 0, canvasNode.width, canvasNode.height);
     }
   }]);
 
@@ -11561,7 +11561,7 @@ module.exports.setLogLevel = function(level) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\olivi\Desktop\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8080 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080");
+__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8080 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080");
 module.exports = __webpack_require__(/*! ./js/main.js */"./js/main.js");
 
 
