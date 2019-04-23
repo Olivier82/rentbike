@@ -11,6 +11,8 @@ const VeloMap = {
   bikeStands: undefined,
   avaiblesBikes: undefined,
   validationButton: undefined,
+  name: undefined,
+  firstName: undefined,
   canvas: undefined,
 
   // Initialisation de la carte
@@ -21,6 +23,8 @@ const VeloMap = {
     this.bikeStands = document.getElementById('bike_stands');
     this.avaiblesBikes = document.getElementById('avaibles_bikes');
     this.validationButton = document.querySelector('.btn-validation');
+    this.name = document.getElementById('name');
+    this.firstName = document.getElementById('firstname');
 
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {
@@ -36,6 +40,14 @@ const VeloMap = {
     this.validationButton.addEventListener('click', () => {
       this.canvas = new Canvas();
     });
+
+    // Sauvegarde des informations noms prénoms
+    this.name = localStorage.setItem('identity', name);
+    this.firstName = localStorage.setItem('identity', firstName);
+
+    let identity = localStorage.getItem('identity');
+    console.log(identity)
+
 
     this.markerVelo();
   },

@@ -111,7 +111,7 @@ function () {
     this.canvasNode = document.getElementById('canvas');
     this.ctx = this.canvasNode.getContext('2d'); //récupère le contexte de l'objet
 
-    this.ctx.clearRect(0, 0, canvasNode.width, canvasNode.height);
+    this.ctx.clearRect(0, 0, 400, 300);
     this.started = false;
     this.paint = false;
     this.prevCursorX = undefined;
@@ -169,7 +169,7 @@ function () {
     key: "redraw",
     // Réinitialisation du canvas
     value: function redraw() {
-      this.ctx.clearRect(0, 0, canvasNode.width, canvasNode.height);
+      this.ctx.clearRect(0, 0, 400, 300);
     }
   }]);
 
@@ -228,6 +228,8 @@ var VeloMap = {
   bikeStands: undefined,
   avaiblesBikes: undefined,
   validationButton: undefined,
+  name: undefined,
+  firstName: undefined,
   canvas: undefined,
   // Initialisation de la carte
   init: function init() {
@@ -239,6 +241,8 @@ var VeloMap = {
     this.bikeStands = document.getElementById('bike_stands');
     this.avaiblesBikes = document.getElementById('avaibles_bikes');
     this.validationButton = document.querySelector('.btn-validation');
+    this.name = document.getElementById('name');
+    this.firstName = document.getElementById('firstname');
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {
         lat: 43.274352269730755,
@@ -251,7 +255,12 @@ var VeloMap = {
 
     this.validationButton.addEventListener('click', function () {
       _this.canvas = new _canvas__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    });
+    }); // Sauvegarde des informations noms prénoms
+
+    this.name = localStorage.setItem('identity', name);
+    this.firstName = localStorage.setItem('identity', firstName);
+    var identity = localStorage.getItem('identity');
+    console.log(identity);
     this.markerVelo();
   },
   // Marker des stations de vélos
@@ -10897,9 +10906,9 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8080":
+/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8081":
 /*!*********************************************************!*\
-  !*** (webpack)-dev-server/client?http://localhost:8080 ***!
+  !*** (webpack)-dev-server/client?http://localhost:8081 ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11153,7 +11162,7 @@ function reloadApp() {
     rootWindow.location.reload();
   }
 }
-/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8080"))
+/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8081"))
 
 /***/ }),
 
@@ -11556,12 +11565,12 @@ module.exports.setLogLevel = function(level) {
 
 /***/ 0:
 /*!****************************************************************************!*\
-  !*** multi (webpack)-dev-server/client?http://localhost:8080 ./js/main.js ***!
+  !*** multi (webpack)-dev-server/client?http://localhost:8081 ./js/main.js ***!
   \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8080 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080");
+__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8081 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8081");
 module.exports = __webpack_require__(/*! ./js/main.js */"./js/main.js");
 
 

@@ -150,6 +150,11 @@ h2 {
     background: #ffffff;
 }
 
+.subtitle-reserve {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
 .btn-reserve {
     background-color: #C33A5A;
     font-size: 1rem;
@@ -176,5 +181,11 @@ h2 {
 .btn-reset:hover {
     color: #ffffff;
     text-decoration: none;
+}
+
+/*** TIMER ***/
+
+.timer {
+    padding: 2rem;
 }
 
