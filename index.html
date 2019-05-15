@@ -77,76 +77,63 @@
         </div>
         <!--SECTION LOCATION VELO-->
         <div class="rent" id="rent">
-                <div class="container-fluid">
-                    <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <h2 class="section-title mb-4">Louer un vélo</h2>
-                            </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                            <div id="map"></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-3 cl-lg-3 rent-info">
-                                <fieldset>
-                                    <legend class="title-rent">Détails de la station</legend>
-                                    <p class="subtitle-rent">Nom de la station :</p>
-                                    <p id="name_station">Aucun élèment</p>
-                                    <p class="subtitle-rent">Adresse de la station : </p>
-                                    <p id="adress_station">Aucun élément</p>
-                                    <p class="subtitle-rent">Statut de la Station</p>
-                                    <p id="status_station">Aucun élèment</p>
-                                    <p id="bike_stands"></p>
-                                    <p id="avaibles_bikes"></p>
-                                    <div class="form-group row form-info">
-                                        <label for="name" class="col-sm-2 col-form-label identity">Nom</label>
-                                        <div class="col-sm-8">
-                                        <input type="text" id="name" class="form-control" placeholder="Votre Nom" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="firstName" class="col-sm-2 col-form-label identity">Prénom</label>
-                                        <div class="col-sm-8">
-                                        <input type="text" id="firstName" class="form-control" placeholder="Votre Prénom" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-10">
-                                            <a href="#reserve" type="submit" class="btn-validation">Signer</a>
-                                        </div>
-                                    </div>
-                                    </fieldset>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        <!--SECTION RESERVATION-->
-        <div class="reserve" id="reserve">
-            <div class="container rentreserve">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <h2 class="section-title mb-4">Réservation</h2>
+                        <h2 class="section-title mb-4">Louer un vélo</h2>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-lg-4 mx-auto">
-                        <p class="subtitle-reserve">Votre Signature</p>
-                        <canvas id="canvas" width="350" heigth="300"></canvas>
-                        <p>
-                        <a href="#" id="reserveButton" class="btn-reserve">Réserver</a>
-                        <a href="#" id="remove" class="btn-reset">Annuler</a>
-                        </p>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <div id="map"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-3 cl-lg-3 rent-info">
+                        <fieldset>
+                            <legend class="title-rent">Détails de la station</legend>
+                            <p class="subtitle-rent">Nom de la station :</p>
+                            <p id="name_station">Aucun élèment</p>
+                            <p class="subtitle-rent">Adresse de la station : </p>
+                            <p id="adress_station">Aucun élément</p>
+                            <p class="subtitle-rent">Statut de la Station</p>
+                            <p id="status_station">Aucun élèment</p>
+                            <p id="bike_stands"></p>
+                            <p id="avaibles_bikes"></p>
+                            <div class="form-group row form-info">
+                                <label for="name" class="col-sm-2 col-form-label identity">Nom</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="name" class="form-control" placeholder="Votre Nom" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="firstName" class="col-sm-2 col-form-label identity">Prénom</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="firstName" class="form-control" placeholder="Votre Prénom" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <canvas id="canvas" width="300" heigth="300"></canvas>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <button type="submit" id="reserveButton" class="btn-reserve">Réserver</button>
+                                    <button type="submit" id="removeButton" class="btn-reset">Annuler</button>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
         </div>
         <!--SECTION TIMER-->
         <div class="timer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <p id="countdown"></p>
-                    </div>
+            <p class="container">
+                <di class="row">
+                    <di class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="section-title mb-4">Information réservation</h2>
+                        <div id="countdown"></div>
+                    </di>
                 </div>
             </div>
         </div>

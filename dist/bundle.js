@@ -117,20 +117,23 @@ function () {
     this.prevCursorX = undefined;
     this.prevCursorY = undefined;
     this.btnReset = document.querySelector('.btn-reset');
-    this.drawing();
-  } // Dessin
+    var offsetCanvas = this.canvasNode.getBoundingClientRect();
+    this.canvasOffsetLeft = offsetCanvas.x;
+    this.canvasOffsetTop = offsetCanvas.y;
+    this.addEventListener();
+  } // Add event listener
 
 
   _createClass(Canvas, [{
-    key: "drawing",
-    value: function drawing() {
+    key: "addEventListener",
+    value: function addEventListener() {
       var _this = this;
 
       this.canvasNode.addEventListener('mousedown', function (e) {
         _this.ctx.beginPath();
 
-        var cursorX = e.clientX - _this.canvasNode.offsetLeft;
-        var cursorY = e.clientY - _this.canvasNode.offsetTop;
+        var cursorX = e.clientX - _this.canvasOffsetLeft;
+        var cursorY = e.clientY - _this.canvasOffsetTop;
 
         _this.ctx.moveTo(cursorX, cursorY);
 
@@ -143,27 +146,33 @@ function () {
         _this.drawLine(e);
       }); // Relachement du click de la souris
 
-      this.canvasNode.addEventListener('mouseup', function (e) {
+      this.canvasNode.addEventListener('mouseup', function () {
         _this.paint = false;
 
         _this.ctx.closePath();
+      }); //Effacer le canvas
+
+      this.btnReset.addEventListener('click', function () {
+        _this.redraw();
       });
     } // Fonction du click
 
   }, {
     key: "drawLine",
     value: function drawLine(event) {
-      if (this.paint) {
-        var cursorX = event.clientX - this.canvasNode.offsetLeft;
-        var cursorY = event.clientY - this.canvasNode.offsetTop;
-        this.ctx.quadraticCurveTo(this.prevCursorX, this.prevCursorY, cursorX, cursorY);
-        this.ctx.strokeStyle = '#000000';
-        this.ctx.lineWidth = '3';
-        this.ctx.stroke();
-        this.ctx.moveTo(this.prevCursorX, this.prevCursorY);
-        this.prevCursorX = cursorX;
-        this.prevCursorY = cursorY;
+      if (!this.paint) {
+        return;
       }
+
+      var cursorX = event.clientX - this.canvasOffsetLeft;
+      var cursorY = event.clientY - this.canvasOffsetTop;
+      this.ctx.quadraticCurveTo(this.prevCursorX, this.prevCursorY, cursorX, cursorY);
+      this.ctx.strokeStyle = '#000000';
+      this.ctx.lineWidth = '3';
+      this.ctx.stroke();
+      this.ctx.moveTo(this.prevCursorX, this.prevCursorY);
+      this.prevCursorX = cursorX;
+      this.prevCursorY = cursorY;
     }
   }, {
     key: "redraw",
@@ -177,6 +186,55 @@ function () {
 }();
 
 
+
+/***/ }),
+
+/***/ "./js/countdown.js":
+/*!*************************!*\
+  !*** ./js/countdown.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var Countdown = {
+  timer: 0,
+  // durée de la réservation en millisecondes
+  currentTime: 0,
+  // heure actuelle
+  deadLine: 0,
+  // heure de fin de la réservation
+  distance: 0,
+  counter: undefined,
+  minutes: 0,
+  secondes: 0,
+  init: function init() {
+    var _this = this;
+
+    this.counter = document.getElementById('countdown');
+    this.deadLine = new Date().getTime();
+    this.timer = 1200000;
+    setInterval(function () {
+      _this.decompte();
+    }, 1000);
+  },
+  decompte: function decompte() {
+    this.currentTime = new Date().getTime(); // Récupération de l'heure actuelle en millisecondes
+
+    this.distance = this.deadLine + this.timer - this.currentTime; // Différence entre le temps de la réservation et l'heure actuelle
+
+    this.minutes = Math.floor(this.distance % (1000 * 60 * 60) / (1000 * 60));
+    this.secondes = Math.floor(this.distance % (1000 * 60) / 1000);
+    document.getElementById('countdown').innerHTML = "Temps restants " + this.minutes + " minutes et " + this.secondes + " secondes";
+
+    if (this.distance < 0) {
+      clearInterval(x);
+      document.getElementById('countdown').innerHTML = " La réservation a expirée.";
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (Countdown);
 
 /***/ }),
 
@@ -216,6 +274,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./canvas */ "./js/canvas.js");
+/* harmony import */ var _countdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./countdown */ "./js/countdown.js");
+
 
 
 var VeloMap = {
@@ -227,22 +287,20 @@ var VeloMap = {
   stationStatus: undefined,
   bikeStands: undefined,
   avaiblesBikes: undefined,
-  validationButton: undefined,
+  canvas: undefined,
   name: undefined,
   firstName: undefined,
-  canvas: undefined,
+  reserveButton: undefined,
   // Initialisation de la carte
   init: function init() {
-    var _this = this;
-
     this.stationName = document.getElementById('name_station');
     this.stationAdress = document.getElementById('adress_station');
     this.stationStatus = document.getElementById('status_station');
     this.bikeStands = document.getElementById('bike_stands');
     this.avaiblesBikes = document.getElementById('avaibles_bikes');
-    this.validationButton = document.querySelector('.btn-validation');
+    this.reserveButton = document.querySelector('#reserveButton');
     this.name = document.getElementById('name');
-    this.firstName = document.getElementById('firstname');
+    this.firstName = document.getElementById('firstName');
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {
         lat: 43.274352269730755,
@@ -253,42 +311,44 @@ var VeloMap = {
       scrollwheel: false
     }); // Affichage du Canvas
 
-    this.validationButton.addEventListener('click', function () {
-      _this.canvas = new _canvas__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    }); // Sauvegarde des informations noms prénoms
-
-    this.name = localStorage.setItem('identity', name);
-    this.firstName = localStorage.setItem('identity', firstName);
-    var identity = localStorage.getItem('identity');
-    console.log(identity);
+    this.canvas = new _canvas__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.markerVelo();
   },
   // Marker des stations de vélos
   markerVelo: function markerVelo() {
-    var _this2 = this;
+    var _this = this;
 
     //Récupération des informations
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.veloApi).then(function (reponse) {
       var stations = reponse.data;
       stations.forEach(function (e) {
         //Affichage des stations
-        _this2.marker = new google.maps.Marker({
+        _this.marker = new google.maps.Marker({
           position: {
             lat: e.position.lat,
             lng: e.position.lng
           },
-          map: _this2.map,
+          map: _this.map,
           icon: 'img/marker/cyclesmarker.png'
         }); // Affichage des informations
 
-        _this2.marker.addListener('click', function () {
-          _this2.stationName.innerHTML = e.name;
-          _this2.stationAdress.innerHTML = e.address;
-          _this2.stationStatus.innerHTML = e.status;
-          _this2.bikeStands.innerHTML = e.bike_stands + ' places';
-          _this2.avaiblesBikes.innerHTML = e.available_bikes + ' vélo(s) disponible(s)';
+        _this.marker.addListener('click', function () {
+          _this.stationName.innerHTML = e.name;
+          _this.stationAdress.innerHTML = e.address;
+          _this.stationStatus.innerHTML = e.status;
+          _this.bikeStands.innerHTML = e.bike_stands + ' places';
+          _this.avaiblesBikes.innerHTML = e.available_bikes + ' vélo(s) disponible(s)';
         });
       });
+    }); // Réservation des vélos
+
+    VeloMap.reserveButton.addEventListener('click', function () {
+      // Sauvegarde les informations noms prénoms dans LocalStorage
+      localStorage.setItem('name', VeloMap.name.value);
+      localStorage.setItem('firstName', VeloMap.firstName.value); //Récupération des informations noms prénoms
+      // Démarage du compte à rebours
+
+      _countdown__WEBPACK_IMPORTED_MODULE_2__["default"].init();
     });
   }
 };
@@ -10906,9 +10966,9 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8081":
+/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8093":
 /*!*********************************************************!*\
-  !*** (webpack)-dev-server/client?http://localhost:8081 ***!
+  !*** (webpack)-dev-server/client?http://localhost:8093 ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11162,7 +11222,7 @@ function reloadApp() {
     rootWindow.location.reload();
   }
 }
-/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8081"))
+/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8093"))
 
 /***/ }),
 
@@ -11565,12 +11625,12 @@ module.exports.setLogLevel = function(level) {
 
 /***/ 0:
 /*!****************************************************************************!*\
-  !*** multi (webpack)-dev-server/client?http://localhost:8081 ./js/main.js ***!
+  !*** multi (webpack)-dev-server/client?http://localhost:8093 ./js/main.js ***!
   \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8081 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8081");
+__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8093 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8093");
 module.exports = __webpack_require__(/*! ./js/main.js */"./js/main.js");
 
 

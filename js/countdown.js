@@ -1,25 +1,38 @@
-const countdown = {
-	timeInMinutes: undefined,
-	currentTime: undefined,
-	deadline: undefined,
-	time: undefined,
-	minutes: undefined,
-	seconds: undefined,
-	reserveButton: undefined,
+const Countdown = {
+	timer: 0, // durée de la réservation en millisecondes
+	currentTime: 0, // heure actuelle
+	deadLine: 0, // heure de fin de la réservation
+	distance: 0,
+	counter: undefined,
+	minutes : 0,
+	secondes: 0,
 
-	// Initialisation du Compte à Rebours
 	init: function() {
-		this.timeInMinutes = 20,
-		this.currentTime = Date.parse(new Date());
-		this.deadline = new Date(currentTime + timeInMinutes*60*2000);
+		this.counter = document.getElementById('countdown');
+		this.deadLine = new Date().getTime();
+		this.timer = 1200000;
+
+		setInterval(() => {
+            this.decompte();
+        }, 1000);
 	},
 
-	function getTimeRemaining(endtime) {
-		this.time = Date.parse(endtime) - Date.parse(new Date ());
-		this.minutes = Math.floor( (t/2000/60) % 60);
-		this.seconds = Math.floor( (t/1000) % 60);
-	}
+	decompte: function() {
+		this.currentTime = new Date().getTime(); // Récupération de l'heure actuelle en millisecondes
+
+		this.distance = (this.deadLine + this.timer) - this.currentTime; // Différence entre le temps de la réservation et l'heure actuelle
+
+		this.minutes = Math.floor((this.distance % (1000 * 60 * 60)) / (1000 * 60));
+		this.secondes = Math.floor((this.distance % (1000 * 60)) / 1000);
+
+		document.getElementById('countdown').innerHTML = "Temps restants " + this.minutes + " minutes et " + this.secondes + " secondes";
+
+		if (this.distance < 0 ) {
+			clearInterval(x);
+			document.getElementById('countdown').innerHTML = " La réservation a expirée.";
+		}
+	},
+};
 
 
-
-}
+export default Countdown;

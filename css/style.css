@@ -146,7 +146,7 @@ h2 {
 
 #canvas {
     border: 2px solid #69ba37;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem;
     background: #ffffff;
 }
 
@@ -162,6 +162,7 @@ h2 {
     color: #ffffff;
     cursor: pointer;
     margin: 1rem 1rem;
+    border: none;
 }
 
 .btn-reserve:hover {
@@ -176,6 +177,7 @@ h2 {
     color: #ffffff;
     cursor: pointer;
     margin: 1rem 1rem;
+    border: none;
 }
 
 .btn-reset:hover {
@@ -184,8 +186,11 @@ h2 {
 }
 
 /*** TIMER ***/
-
 .timer {
+    background: #f3f3f3;
     padding: 2rem;
 }
 
+.timer h2 {
+    text-align: center;
+}

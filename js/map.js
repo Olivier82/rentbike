@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Canvas from './canvas';
+import Countdown from './countdown';
 
 const VeloMap = {
   veloApi: 'https://api.jcdecaux.com/vls/v1/stations?contract=Marseille&apiKey=33c5267bc2c91d31e6bab65c8ac5859ebc6fcfcb',
@@ -10,10 +11,10 @@ const VeloMap = {
   stationStatus: undefined,
   bikeStands: undefined,
   avaiblesBikes: undefined,
-  validationButton: undefined,
+  canvas: undefined,
   name: undefined,
   firstName: undefined,
-  canvas: undefined,
+  reserveButton : undefined,
 
   // Initialisation de la carte
   init: function () {
@@ -22,9 +23,9 @@ const VeloMap = {
     this.stationStatus = document.getElementById('status_station');
     this.bikeStands = document.getElementById('bike_stands');
     this.avaiblesBikes = document.getElementById('avaibles_bikes');
-    this.validationButton = document.querySelector('.btn-validation');
+    this.reserveButton = document.querySelector('#reserveButton');
     this.name = document.getElementById('name');
-    this.firstName = document.getElementById('firstname');
+    this.firstName = document.getElementById('firstName');
 
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {
@@ -37,19 +38,10 @@ const VeloMap = {
     });
 
     // Affichage du Canvas
-    this.validationButton.addEventListener('click', () => {
-      this.canvas = new Canvas();
-    });
-
-    // Sauvegarde des informations noms prénoms
-    this.name = localStorage.setItem('identity', name);
-    this.firstName = localStorage.setItem('identity', firstName);
-
-    let identity = localStorage.getItem('identity');
-    console.log(identity)
-
+    this.canvas = new Canvas();
 
     this.markerVelo();
+
   },
 
   // Marker des stations de vélos
@@ -76,7 +68,21 @@ const VeloMap = {
           });
         });
       });
+
+        // Réservation des vélos
+        VeloMap.reserveButton.addEventListener('click', function () {
+        // Sauvegarde les informations noms prénoms dans LocalStorage
+        localStorage.setItem('name', VeloMap.name.value);
+        localStorage.setItem('firstName', VeloMap.firstName.value);
+        //Récupération des informations noms prénoms
+
+        // Démarage du compte à rebours
+        Countdown.init();
+
+    });
+
   },
+
 };
 
 export default VeloMap;
