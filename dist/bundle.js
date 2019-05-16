@@ -116,6 +116,7 @@ function () {
     this.paint = false;
     this.prevCursorX = undefined;
     this.prevCursorY = undefined;
+    this.reserveButton = document.querySelector('.btn-reserve');
     this.btnReset = document.querySelector('.btn-reset');
     var offsetCanvas = this.canvasNode.getBoundingClientRect();
     this.canvasOffsetLeft = offsetCanvas.x;
@@ -139,7 +140,9 @@ function () {
 
         _this.prevCursorX = cursorX;
         _this.prevCursorY = cursorY;
-        _this.paint = true;
+        _this.paint = true; // Affichage du bouton réservation
+
+        document.querySelector('#reserveButton').style.display = 'inline';
       }); // Mouvement de la souris sur le Canvas
 
       this.canvasNode.addEventListener('mousemove', function (e) {
@@ -150,10 +153,12 @@ function () {
         _this.paint = false;
 
         _this.ctx.closePath();
-      }); //Effacer le canvas
+      }); // Effacer le canvas et masquer le bouton réservation
 
       this.btnReset.addEventListener('click', function () {
         _this.redraw();
+
+        document.querySelector('#reserveButton').style.display = 'none';
       });
     } // Fonction du click
 
@@ -291,6 +296,8 @@ var VeloMap = {
   name: undefined,
   firstName: undefined,
   reserveButton: undefined,
+  sessionStation: undefined,
+  infoReserve: undefined,
   // Initialisation de la carte
   init: function init() {
     this.stationName = document.getElementById('name_station');
@@ -301,6 +308,8 @@ var VeloMap = {
     this.reserveButton = document.querySelector('#reserveButton');
     this.name = document.getElementById('name');
     this.firstName = document.getElementById('firstName');
+    this.reserveSection = document.querySelector('#timer');
+    this.infoReserve = document.getElementById('inforeserve');
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {
         lat: 43.274352269730755,
@@ -345,8 +354,15 @@ var VeloMap = {
     VeloMap.reserveButton.addEventListener('click', function () {
       // Sauvegarde les informations noms prénoms dans LocalStorage
       localStorage.setItem('name', VeloMap.name.value);
-      localStorage.setItem('firstName', VeloMap.firstName.value); //Récupération des informations noms prénoms
-      // Démarage du compte à rebours
+      localStorage.setItem('firstName', VeloMap.firstName.value); // Sauvegarde des informations de location dans SessionStorage
+
+      sessionStorage.setItem('station', VeloMap.stationName.value); //Récupération des informations noms prénoms
+
+      VeloMap.name = localStorage.getItem(VeloMap.name);
+      VeloMap.firstName = localStorage.getItem(VeloMap.firstName); // Affichage des informations de location
+
+      VeloMap.sessionStation = sessionStorage.getItem('station');
+      VeloMap.infoReserve.textContent = "Vélo reservé à la station " + sessionStorage.station + " par " + localStorage.name + "  " + localStorage.firstName; // Démarage du compte à rebours
 
       _countdown__WEBPACK_IMPORTED_MODULE_2__["default"].init();
     });
@@ -10966,9 +10982,9 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8093":
+/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8090":
 /*!*********************************************************!*\
-  !*** (webpack)-dev-server/client?http://localhost:8093 ***!
+  !*** (webpack)-dev-server/client?http://localhost:8090 ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11222,7 +11238,7 @@ function reloadApp() {
     rootWindow.location.reload();
   }
 }
-/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8093"))
+/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8090"))
 
 /***/ }),
 
@@ -11625,12 +11641,12 @@ module.exports.setLogLevel = function(level) {
 
 /***/ 0:
 /*!****************************************************************************!*\
-  !*** multi (webpack)-dev-server/client?http://localhost:8093 ./js/main.js ***!
+  !*** multi (webpack)-dev-server/client?http://localhost:8090 ./js/main.js ***!
   \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8093 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8093");
+__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8090 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8090");
 module.exports = __webpack_require__(/*! ./js/main.js */"./js/main.js");
 
 

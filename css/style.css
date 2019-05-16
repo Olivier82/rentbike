@@ -163,6 +163,7 @@ h2 {
     cursor: pointer;
     margin: 1rem 1rem;
     border: none;
+    display: none;
 }
 
 .btn-reserve:hover {
@@ -186,11 +187,16 @@ h2 {
 }
 
 /*** TIMER ***/
-.timer {
+.reserve {
     background: #f3f3f3;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .timer h2 {
     text-align: center;
+}
+
+#countdown, #inforeserve {
+    text-align: center;
+    font-size: 1.5rem;
 }

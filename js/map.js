@@ -2,6 +2,7 @@ import axios from 'axios';
 import Canvas from './canvas';
 import Countdown from './countdown';
 
+
 const VeloMap = {
   veloApi: 'https://api.jcdecaux.com/vls/v1/stations?contract=Marseille&apiKey=33c5267bc2c91d31e6bab65c8ac5859ebc6fcfcb',
   map: null,
@@ -15,6 +16,8 @@ const VeloMap = {
   name: undefined,
   firstName: undefined,
   reserveButton : undefined,
+  sessionStation: undefined,
+  infoReserve: undefined,
 
   // Initialisation de la carte
   init: function () {
@@ -26,6 +29,8 @@ const VeloMap = {
     this.reserveButton = document.querySelector('#reserveButton');
     this.name = document.getElementById('name');
     this.firstName = document.getElementById('firstName');
+    this.reserveSection = document.querySelector('#timer');
+    this.infoReserve = document.getElementById('inforeserve');
 
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {
@@ -71,13 +76,24 @@ const VeloMap = {
 
         // Réservation des vélos
         VeloMap.reserveButton.addEventListener('click', function () {
+
         // Sauvegarde les informations noms prénoms dans LocalStorage
-        localStorage.setItem('name', VeloMap.name.value);
-        localStorage.setItem('firstName', VeloMap.firstName.value);
+          localStorage.setItem('name', VeloMap.name.value);
+          localStorage.setItem('firstName', VeloMap.firstName.value);
+
+        // Sauvegarde des informations de location dans SessionStorage
+          sessionStorage.setItem('station', VeloMap.stationName.value);
+
         //Récupération des informations noms prénoms
+          VeloMap.name = localStorage.getItem(VeloMap.name);
+          VeloMap.firstName = localStorage.getItem(VeloMap.firstName);
+
+        // Affichage des informations de location
+          VeloMap.sessionStation = sessionStorage.getItem('station');
+          VeloMap.infoReserve.textContent = "Vélo reservé à la station " + sessionStorage.station + " par " +  localStorage.name +  "  " + localStorage.firstName;
 
         // Démarage du compte à rebours
-        Countdown.init();
+          Countdown.init();
 
     });
 

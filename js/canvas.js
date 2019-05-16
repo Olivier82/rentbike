@@ -7,6 +7,7 @@ export default class Canvas {
     this.paint = false;
     this.prevCursorX = undefined;
     this.prevCursorY = undefined;
+    this.reserveButton = document.querySelector('.btn-reserve');
     this.btnReset = document.querySelector('.btn-reset');
 
     const offsetCanvas = this.canvasNode.getBoundingClientRect();
@@ -28,7 +29,10 @@ export default class Canvas {
       this.prevCursorX = cursorX;
       this.prevCursorY = cursorY;
       this.paint = true;
-    });
+
+      // Affichage du bouton réservation
+      document.querySelector('#reserveButton').style.display = 'inline';
+  });
 
     // Mouvement de la souris sur le Canvas
     this.canvasNode.addEventListener('mousemove', (e) => {
@@ -41,9 +45,10 @@ export default class Canvas {
       this.ctx.closePath();
     });
 
-    //Effacer le canvas
+    // Effacer le canvas et masquer le bouton réservation
     this.btnReset.addEventListener('click', () => {
       this.redraw();
+      document.querySelector('#reserveButton').style.display = 'none';
     });
   }
 
