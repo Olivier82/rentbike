@@ -111,7 +111,7 @@ function () {
     this.canvasNode = document.getElementById('canvas');
     this.ctx = this.canvasNode.getContext('2d'); //récupère le contexte de l'objet
 
-    this.ctx.clearRect(0, 0, 400, 300);
+    this.ctx.clearRect(0, 0, 280, 250);
     this.started = false;
     this.paint = false;
     this.prevCursorX = undefined;
@@ -178,12 +178,12 @@ function () {
       this.ctx.moveTo(this.prevCursorX, this.prevCursorY);
       this.prevCursorX = cursorX;
       this.prevCursorY = cursorY;
-    }
+    } // Réinitialisation du canvas
+
   }, {
     key: "redraw",
-    // Réinitialisation du canvas
     value: function redraw() {
-      this.ctx.clearRect(0, 0, 400, 300);
+      this.ctx.clearRect(0, 0, 300, 250);
     }
   }]);
 
@@ -214,28 +214,32 @@ var Countdown = {
   counter: undefined,
   minutes: 0,
   secondes: 0,
+  interval: undefined,
   init: function init() {
     var _this = this;
 
     this.counter = document.getElementById('countdown');
     this.deadLine = new Date().getTime();
     this.timer = 1200000;
-    setInterval(function () {
+    this.interval = setInterval(function () {
       _this.decompte();
     }, 1000);
   },
   decompte: function decompte() {
-    this.currentTime = new Date().getTime(); // Récupération de l'heure actuelle en millisecondes
+    // Récupération de l'heure actuelle en millisecondes
+    this.currentTime = new Date().getTime(); // Différence entre le temps de la réservation et l'heure actuelle
 
-    this.distance = this.deadLine + this.timer - this.currentTime; // Différence entre le temps de la réservation et l'heure actuelle
-
+    this.distance = this.deadLine + this.timer - this.currentTime;
     this.minutes = Math.floor(this.distance % (1000 * 60 * 60) / (1000 * 60));
     this.secondes = Math.floor(this.distance % (1000 * 60) / 1000);
-    document.getElementById('countdown').innerHTML = "Temps restants " + this.minutes + " minutes et " + this.secondes + " secondes";
+    this.counter.innerHTML = "Temps restants " + this.minutes + " minutes et " + this.secondes + " secondes"; // Enregistrement valeur pour sessionStorage
+
+    sessionStorage.setItem('minutes', this.minutes);
+    sessionStorage.setItem('secondes', this.secondes);
 
     if (this.distance < 0) {
-      clearInterval(x);
-      document.getElementById('countdown').innerHTML = " La réservation a expirée.";
+      clearInterval(this.interval);
+      this.counter.innerHTML = " La réservation a expirée.";
     }
   }
 };
@@ -254,6 +258,8 @@ var Countdown = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./js/slider.js");
 /* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map */ "./js/map.js");
+/* harmony import */ var _canvas__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./canvas */ "./js/canvas.js");
+
 
 
 
@@ -262,7 +268,11 @@ window.initMap = function () {
 };
 
 window.addEventListener('load', function () {
-  _slider__WEBPACK_IMPORTED_MODULE_0__["default"].init();
+  _slider__WEBPACK_IMPORTED_MODULE_0__["default"].init(); // Initialisation du Canvas
+
+  var canvas = new _canvas__WEBPACK_IMPORTED_MODULE_2__["default"](); // Récupération des informations SessionStorage
+
+  var stationName = sessionStorage.getItem('stationName');
 });
 
 /***/ }),
@@ -278,9 +288,7 @@ window.addEventListener('load', function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./canvas */ "./js/canvas.js");
-/* harmony import */ var _countdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./countdown */ "./js/countdown.js");
-
+/* harmony import */ var _countdown__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./countdown */ "./js/countdown.js");
 
 
 var VeloMap = {
@@ -289,38 +297,34 @@ var VeloMap = {
   marker: null,
   stationName: undefined,
   stationAdress: undefined,
-  stationStatus: undefined,
   bikeStands: undefined,
-  avaiblesBikes: undefined,
-  canvas: undefined,
+  availableBikes: undefined,
   name: undefined,
   firstName: undefined,
   reserveButton: undefined,
   sessionStation: undefined,
   infoReserve: undefined,
+  errorReserveElt: undefined,
   // Initialisation de la carte
   init: function init() {
     this.stationName = document.getElementById('name_station');
     this.stationAdress = document.getElementById('adress_station');
-    this.stationStatus = document.getElementById('status_station');
     this.bikeStands = document.getElementById('bike_stands');
-    this.avaiblesBikes = document.getElementById('avaibles_bikes');
-    this.reserveButton = document.querySelector('#reserveButton');
+    this.availableBikes = document.getElementById('available_bikes');
+    this.reserveButton = document.getElementById('reserveButton');
     this.name = document.getElementById('name');
     this.firstName = document.getElementById('firstName');
-    this.reserveSection = document.querySelector('#timer');
+    this.reserveSection = document.getElementById('timer');
     this.infoReserve = document.getElementById('inforeserve');
+    this.errorReserveElt = document.getElementById('error-reserve');
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {
         lat: 43.274352269730755,
         lng: 5.390405906592448
       },
-      zoom: 14,
-      minZoom: 12,
+      zoom: 13,
       scrollwheel: false
-    }); // Affichage du Canvas
-
-    this.canvas = new _canvas__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    });
     this.markerVelo();
   },
   // Marker des stations de vélos
@@ -344,27 +348,32 @@ var VeloMap = {
         _this.marker.addListener('click', function () {
           _this.stationName.innerHTML = e.name;
           _this.stationAdress.innerHTML = e.address;
-          _this.stationStatus.innerHTML = e.status;
           _this.bikeStands.innerHTML = e.bike_stands + ' places';
-          _this.avaiblesBikes.innerHTML = e.available_bikes + ' vélo(s) disponible(s)';
+          _this.availableBikes.innerHTML = e.available_bikes + ' vélo(s) disponible(s)';
         });
       });
     }); // Réservation des vélos
 
-    VeloMap.reserveButton.addEventListener('click', function () {
-      // Sauvegarde les informations noms prénoms dans LocalStorage
-      localStorage.setItem('name', VeloMap.name.value);
-      localStorage.setItem('firstName', VeloMap.firstName.value); // Sauvegarde des informations de location dans SessionStorage
+    this.reserveButton.addEventListener('click', function () {
+      if (_this.stationName.textContent === 'Aucun élément') {
+        _this.errorReserveElt.textContent = 'Veuillez sélectionner une station';
+        return;
+      } else if (_this.availableBikes.textContent === '0 vélo(s) disponible(s)') {
+        _this.errorReserveElt.textContent = 'Aucun vélo de disponible. Veuillez choisir une autre station.';
+        return;
+      } // Sauvegarde les informations noms prénoms dans LocalStorage
 
-      sessionStorage.setItem('station', VeloMap.stationName.value); //Récupération des informations noms prénoms
 
-      VeloMap.name = localStorage.getItem(VeloMap.name);
-      VeloMap.firstName = localStorage.getItem(VeloMap.firstName); // Affichage des informations de location
+      localStorage.setItem('name', _this.name.value);
+      localStorage.setItem('firstName', _this.firstName.value); // Sauvegarde des informations de location dans SessionStorage
 
-      VeloMap.sessionStation = sessionStorage.getItem('station');
-      VeloMap.infoReserve.textContent = "Vélo reservé à la station " + sessionStorage.station + " par " + localStorage.name + "  " + localStorage.firstName; // Démarage du compte à rebours
+      sessionStorage.setItem('station', _this.stationName.textContent); // Affichage de la partie Réservation
 
-      _countdown__WEBPACK_IMPORTED_MODULE_2__["default"].init();
+      _this.reserveSection.style.display = 'block'; // Affichage des informations de location
+
+      _this.infoReserve.textContent = "V\xE9lo reserv\xE9 \xE0 la station ".concat(_this.stationName.textContent, " par ").concat(_this.name.value, " ").concat(_this.firstName.value); // Démarage du compte à rebours
+
+      _countdown__WEBPACK_IMPORTED_MODULE_1__["default"].init();
     });
   }
 };
@@ -10982,9 +10991,9 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8090":
+/***/ "./node_modules/webpack-dev-server/client/index.js?http://localhost:8088":
 /*!*********************************************************!*\
-  !*** (webpack)-dev-server/client?http://localhost:8090 ***!
+  !*** (webpack)-dev-server/client?http://localhost:8088 ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11238,7 +11247,7 @@ function reloadApp() {
     rootWindow.location.reload();
   }
 }
-/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8090"))
+/* WEBPACK VAR INJECTION */}.call(this, "?http://localhost:8088"))
 
 /***/ }),
 
@@ -11641,12 +11650,12 @@ module.exports.setLogLevel = function(level) {
 
 /***/ 0:
 /*!****************************************************************************!*\
-  !*** multi (webpack)-dev-server/client?http://localhost:8090 ./js/main.js ***!
+  !*** multi (webpack)-dev-server/client?http://localhost:8088 ./js/main.js ***!
   \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8090 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8090");
+__webpack_require__(/*! C:\Users\olivi\Sites\oc\rentbike\node_modules\webpack-dev-server\client\index.js?http://localhost:8088 */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8088");
 module.exports = __webpack_require__(/*! ./js/main.js */"./js/main.js");
 
 

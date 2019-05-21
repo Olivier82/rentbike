@@ -97,9 +97,15 @@ h2 {
     color: #69ba37;
 }
 
-#name_station, #adress_station, #status_station, #bike_stands, #avaibles_bikes {
+#name_station, #adress_station, #status_station, #bike_stands, #available_bikes {
     font-family: 'Roboto-Medium', Arial, Helvetica, sans-serif;
     font-size: 0.8rem;
+}
+
+#error-reserve {
+    color: #C33A5A;
+    font-size: 1.2rem;
+    text-align: center;
 }
 
 .form-info {
@@ -132,21 +138,8 @@ h2 {
 }
 
 /*** CANVAS ***/
-
-.reserve {
-    background: #e3e3e3;
-}
-
-.reserve h2 {
-    font-family: 'Roboto-Bold', Arial, Helvetica, sans-serif;
-    font-size: 2.5rem;
-    padding: 2rem 0;
-    text-align: center;
-}
-
 #canvas {
     border: 2px solid #69ba37;
-    margin: 1.5rem;
     background: #ffffff;
 }
 
@@ -159,9 +152,8 @@ h2 {
     background-color: #C33A5A;
     font-size: 1rem;
     padding: 0.5rem 1.5rem;
+    margin-right: 1.2rem;
     color: #ffffff;
-    cursor: pointer;
-    margin: 1rem 1rem;
     border: none;
     display: none;
 }
@@ -176,27 +168,31 @@ h2 {
     font-size: 1rem;
     padding: 0.5rem 1.5rem;
     color: #ffffff;
-    cursor: pointer;
-    margin: 1rem 1rem;
     border: none;
 }
-
 .btn-reset:hover {
     color: #ffffff;
     text-decoration: none;
 }
 
 /*** TIMER ***/
-.reserve {
-    background: #f3f3f3;
-    padding: 1rem;
-}
-
-.timer h2 {
-    text-align: center;
+#timer {
+    background: rgba(8, 8, 8, 0.8);
+    padding: 1.2rem;
+    display: none;
 }
 
 #countdown, #inforeserve {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.reset-reserve {
+    background-color: rgb(214, 28, 72);
+    font-size: 0.8rem;
+    padding: 0.3rem 1rem;
+    color: #ffffff;
+    border: none;
+
 }

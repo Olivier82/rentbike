@@ -2,7 +2,7 @@ export default class Canvas {
   constructor() {
     this.canvasNode = document.getElementById('canvas');
     this.ctx = this.canvasNode.getContext('2d'); //récupère le contexte de l'objet
-    this.ctx.clearRect(0, 0, 400, 300);
+    this.ctx.clearRect(0, 0, 280, 250);
     this.started = false;
     this.paint = false;
     this.prevCursorX = undefined;
@@ -32,7 +32,7 @@ export default class Canvas {
 
       // Affichage du bouton réservation
       document.querySelector('#reserveButton').style.display = 'inline';
-  });
+    });
 
     // Mouvement de la souris sur le Canvas
     this.canvasNode.addEventListener('mousemove', (e) => {
@@ -68,10 +68,10 @@ export default class Canvas {
     this.ctx.moveTo(this.prevCursorX, this.prevCursorY);
     this.prevCursorX = cursorX;
     this.prevCursorY = cursorY;
-  };
+  }
 
   // Réinitialisation du canvas
   redraw() {
-    this.ctx.clearRect(0, 0, 400, 300);
-  };
+    this.ctx.clearRect(0, 0, 300, 250);
+  }
 }
