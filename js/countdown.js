@@ -8,7 +8,7 @@ const Countdown = {
 	secondes: 0,
 	interval: undefined,
 
-	init: function() {
+	init() {
 		this.counter = document.getElementById('countdown');
 		this.deadLine = new Date().getTime();
 		this.timer = 1200000;
@@ -18,7 +18,7 @@ const Countdown = {
         }, 1000);
 	},
 
-	decompte: function() {
+	decompte() {
 		// Récupération de l'heure actuelle en millisecondes
 		this.currentTime = new Date().getTime();
 
@@ -39,6 +39,9 @@ const Countdown = {
 			this.counter.innerHTML = " La réservation a expirée.";
 		}
 	},
+	loadValues() {
+
+	}
 };
 
 export default Countdown;

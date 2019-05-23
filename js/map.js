@@ -1,5 +1,7 @@
 import axios from 'axios';
+import $ from 'jquery';
 import Countdown from './countdown';
+import Canvas from './canvas';
 
 const VeloMap = {
   veloApi: 'https://api.jcdecaux.com/vls/v1/stations?contract=Marseille&apiKey=33c5267bc2c91d31e6bab65c8ac5859ebc6fcfcb',
@@ -38,6 +40,36 @@ const VeloMap = {
       scrollwheel: false
     });
 
+    // Réservation des vélos
+    this.reserveButton.addEventListener('click', () => {
+      if (this.stationName.textContent === 'Aucun élément') {
+        this.errorReserveElt.textContent = 'Veuillez sélectionner une station';
+        return;
+      } else if (this.availableBikes.textContent === '0 vélo(s) disponible(s)') {
+        this.errorReserveElt.textContent = 'Aucun vélo de disponible. Veuillez choisir une autre station.';
+        return;
+      }
+
+
+      // Sauvegarde les informations noms prénoms dans LocalStorage
+      localStorage.setItem('name', this.name.value);
+      localStorage.setItem('firstName', this.firstName.value);
+
+      // Sauvegarde des informations de location dans SessionStorage
+      sessionStorage.setItem('station', this.stationName.textContent);
+      sessionStorage.setItem('name', this.name.value);
+      sessionStorage.setItem('firstName', this.firstName.value);
+
+      // Affichage de la partie Réservation
+      this.reserveSection.style.display = 'block';
+
+      // Affichage des informations de location
+      this.infoReserve.textContent = `Vélo reservé à la station ${this.stationName.textContent} par ${this.name.value} ${this.firstName.value}`;
+
+      // Démarage du compte à rebours
+      Countdown.init();
+    });
+
     this.markerVelo();
   },
 
@@ -45,8 +77,9 @@ const VeloMap = {
   markerVelo: function () {
     //Récupération des informations
     axios.get(this.veloApi)
-      .then(reponse => {
-        const stations = reponse.data;
+      .then(({ data }) => {
+        const stations = data;
+
         stations.forEach(e => {
           //Affichage des stations
           this.marker = new google.maps.Marker ({
@@ -63,35 +96,16 @@ const VeloMap = {
             this.availableBikes.innerHTML = e.available_bikes + ' vélo(s) disponible(s)';
           });
         });
+
+        setTimeout(() => new Canvas(), 2000);
       });
-
-    // Réservation des vélos
-    this.reserveButton.addEventListener('click', () => {
-      if (this.stationName.textContent === 'Aucun élément') {
-        this.errorReserveElt.textContent = 'Veuillez sélectionner une station';
-        return;
-      } else if (this.availableBikes.textContent === '0 vélo(s) disponible(s)') {
-        this.errorReserveElt.textContent = 'Aucun vélo de disponible. Veuillez choisir une autre station.';
-        return;
-      }
-
-      // Sauvegarde les informations noms prénoms dans LocalStorage
-      localStorage.setItem('name', this.name.value);
-      localStorage.setItem('firstName', this.firstName.value);
-
-      // Sauvegarde des informations de location dans SessionStorage
-      sessionStorage.setItem('station', this.stationName.textContent);
-
-      // Affichage de la partie Réservation
-      this.reserveSection.style.display = 'block';
-
-      // Affichage des informations de location
-      this.infoReserve.textContent = `Vélo reservé à la station ${this.stationName.textContent} par ${this.name.value} ${this.firstName.value}`;
-
-      // Démarage du compte à rebours
-      Countdown.init();
-    });
   },
+  // Afficher les valeurs du stockage
+  loadValues: function() {
+    this.stationName.textContent = sessionStorage.getItem('station');
+    this.name.value = sessionStorage.getItem('name');
+    this.firstName.value = sessionStorage.getItem('firstName');
+  }
 };
 
 export default VeloMap;
