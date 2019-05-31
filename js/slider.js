@@ -4,7 +4,7 @@ const Slider = {
     leftArrow: undefined,
     rightArrow: undefined,
 
-    init: function () {
+    init() {
         this.slides = Array.from(document.querySelectorAll('.carousel-item'));
         this.leftArrow = document.querySelector('.carousel-control-prev-icon');
         this.rightArrow = document.querySelector('.carousel-control-next-icon');
@@ -31,13 +31,13 @@ const Slider = {
         }, 5000);
     },
 
-    hideActiveSlide: function () {
+    hideActiveSlide() {
         const activeSlide = this.slides.find((slide) => slide.classList.contains('active'));
 
         activeSlide.classList.remove('active');
     },
 
-    slideRight: function () {
+    slideRight() {
         this.hideActiveSlide();
 
         this.current++;
@@ -47,7 +47,7 @@ const Slider = {
         this.slides[this.current].classList.add('active');
     },
 
-    slideLeft: function () {
+    slideLeft() {
         this.hideActiveSlide();
 
         this.current--;

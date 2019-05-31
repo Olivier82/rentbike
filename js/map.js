@@ -1,5 +1,4 @@
 import axios from 'axios';
-import $ from 'jquery';
 import Countdown from './countdown';
 import Canvas from './canvas';
 
@@ -50,7 +49,6 @@ const VeloMap = {
         return;
       }
 
-
       // Sauvegarde les informations noms prénoms dans LocalStorage
       localStorage.setItem('name', this.name.value);
       localStorage.setItem('firstName', this.firstName.value);
@@ -64,7 +62,7 @@ const VeloMap = {
       this.reserveSection.style.display = 'block';
 
       // Affichage des informations de location
-      this.infoReserve.textContent = `Vélo reservé à la station ${this.stationName.textContent} par ${this.name.value} ${this.firstName.value}`;
+      this.infoReserve.textContent = `Vélo reservé à la station ${sessionStorage.getItem('station')} par ${sessionStorage.getItem('name')} ${sessionStorage.getItem('firstName')}`;
 
       // Démarage du compte à rebours
       Countdown.init();
@@ -92,8 +90,8 @@ const VeloMap = {
           this.marker.addListener('click', () => {
             this.stationName.innerHTML = e.name;
             this.stationAdress.innerHTML = e.address;
-            this.bikeStands.innerHTML = e.bike_stands + ' places';
-            this.availableBikes.innerHTML = e.available_bikes + ' vélo(s) disponible(s)';
+            this.bikeStands.innerHTML = ` ${e.bike_stands} places`;
+            this.availableBikes.innerHTML = `${e.available_bikes} vélo(s) disponible(s) `;
           });
         });
 
@@ -102,10 +100,15 @@ const VeloMap = {
   },
   // Afficher les valeurs du stockage
   loadValues: function() {
-    this.stationName.textContent = sessionStorage.getItem('station');
-    this.name.value = sessionStorage.getItem('name');
-    this.firstName.value = sessionStorage.getItem('firstName');
-  }
+    if (sessionStorage.getItem('station')) {
+      this.infoReserve.textContent = `Vélo reservé à la station ${sessionStorage.getItem('station')} par ${sessionStorage.getItem('name')} ${sessionStorage.getItem('firstName')}`;
+      this.reserveSection.style.display = 'block';
+    }
+
+    // Afficher les informations du localStorage
+    this.name.value = localStorage.getItem('name');
+    this.firstName.value = localStorage.getItem('firstName');
+  },
 };
 
 export default VeloMap;

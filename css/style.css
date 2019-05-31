@@ -176,14 +176,21 @@ h2 {
 
 /*** TIMER ***/
 #timer {
-    background: rgba(8, 8, 8, 0.8);
+    position: fixed;
+    top: 50%;
+    left: 35%;
+    border-radius: 4px;
+    transform:translate(-50%);
+    background:rgba(195,58,96, 0.9) ;
     padding: 1.2rem;
+    z-index: 20;
+    text-align: center;
     display: none;
 }
 
 #countdown, #inforeserve {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #ffffff;
 }
 

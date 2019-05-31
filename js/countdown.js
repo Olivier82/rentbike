@@ -8,14 +8,14 @@ const Countdown = {
 	secondes: 0,
 	interval: undefined,
 
-	init() {
+	init(deadLine = new Date().getTime()) {
 		this.counter = document.getElementById('countdown');
-		this.deadLine = new Date().getTime();
+		this.deadLine = deadLine;
 		this.timer = 1200000;
 
 		this.interval = setInterval(() => {
-            this.decompte();
-        }, 1000);
+			this.decompte();
+		}, 1000);
 	},
 
 	decompte() {
@@ -28,20 +28,22 @@ const Countdown = {
 		this.minutes = Math.floor((this.distance % (1000 * 60 * 60)) / (1000 * 60));
 		this.secondes = Math.floor((this.distance % (1000 * 60)) / 1000);
 
-		this.counter.innerHTML = "Temps restants " + this.minutes + " minutes et " + this.secondes + " secondes";
+		this.counter.innerHTML = `Temps restant  ${this.minutes} minutes et ${this.secondes} secondes`;
 
-		// Enregistrement valeur pour sessionStorage
-		sessionStorage.setItem('minutes', this.minutes);
-		sessionStorage.setItem('secondes', this.secondes);
+		// Stockage du compte à rebours dans le sessionStorage
+		sessionStorage.setItem('deadLine', this.deadLine);
 
 		if (this.distance < 0) {
 			clearInterval(this.interval);
-			this.counter.innerHTML = " La réservation a expirée.";
+			this.counter.innerHTML = `La réservation a expirée.`;
 		}
 	},
-	loadValues() {
 
-	}
+	loadValues() {
+		if (sessionStorage.getItem('station')) {
+			this.init(parseInt(sessionStorage.getItem('deadLine')));
+		}
+	},
 };
 
 export default Countdown;
