@@ -18,7 +18,7 @@ const VeloMap = {
   errorReserveElt: undefined,
 
   // Initialisation de la carte
-  init: function () {
+  init() {
     this.stationName = document.getElementById('name_station');
     this.stationAdress = document.getElementById('adress_station');
     this.bikeStands = document.getElementById('bike_stands');
@@ -72,7 +72,7 @@ const VeloMap = {
   },
 
   // Marker des stations de vélos
-  markerVelo: function () {
+  markerVelo() {
     //Récupération des informations
     axios.get(this.veloApi)
       .then(({ data }) => {
@@ -99,7 +99,7 @@ const VeloMap = {
       });
   },
   // Afficher les valeurs du stockage
-  loadValues: function() {
+  loadValues() {
     if (sessionStorage.getItem('station')) {
       this.infoReserve.textContent = `Vélo reservé à la station ${sessionStorage.getItem('station')} par ${sessionStorage.getItem('name')} ${sessionStorage.getItem('firstName')}`;
       this.reserveSection.style.display = 'block';
