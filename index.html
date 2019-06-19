@@ -7,6 +7,7 @@
         <meta name="description" content="Service de location de vélo sur Paris">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
         <link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/icon/favicon-16x16.png">
         <link rel="icon" type="image/png" sizes="16x16" href="img/icon/favicon.ico">
@@ -35,7 +36,7 @@
             </div>
         </nav>
         <!-- SLIDERS -->
-        <div id="carousel" class="carousel-slide" data-ride="carousel" id="services">
+        <div id="carousel" class="carousel-slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="img/sliders/slider1.jpg" alt="homme sur son vélo">
@@ -69,6 +70,14 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+                <div id="carouselButtons">
+                    <button id="playButton" type="button">
+                        <i class="fa fa-play" aria-hidden="true"></i>
+                    </button>
+                    <button id="pauseButton" type="button">
+                        <i class="fa fa-pause" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <!--SECTION LOCATION VELO-->
@@ -107,7 +116,7 @@
                                 </div>
                             </div>
                             <div>
-                                <canvas id="canvas" width="280" heigth="280"></canvas>
+                                <canvas id="canvas" width="280" height="200"></canvas>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
@@ -133,6 +142,6 @@
         </div>
         <!-- JAVASCRIPT ET JQUERY-->
         <script src="dist/bundle.js"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUxOoLfXI3uZyJFWi4dz-ed_GaFGf5AY&callback=initMap" type="text/javascript"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaUxOoLfXI3uZyJFWi4dz-ed_GaFGf5AY&callback=initMap"></script>
     </body>
 </html>

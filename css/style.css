@@ -39,10 +39,38 @@ h2 {
 /*** CAROUSEL ***/
 
 .carousel-control-next-icon, .carousel-control-prev-icon {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
 }
 
+#carouselButtons {
+    position: absolute;
+    top: 60%;
+    left: 47%;
+    z-index: 2;
+}
+
+#pauseButton, #playButton {
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+    color: #cccccc;
+}
+
+#playButton{
+    display: none;
+}
+
+#pauseButton:hover, #playButton:hover {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+}
+
+#pauseButton:focus, #playButton:focus {
+    outline: 0;
+    border: none;
+}
 
 .carousel-caption {
     margin-bottom: 22rem;

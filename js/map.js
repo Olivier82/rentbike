@@ -80,18 +80,18 @@ const VeloMap = {
 
         stations.forEach(e => {
           //Affichage des stations
-          this.marker = new google.maps.Marker ({
+          const marker = new google.maps.Marker({
             position: {lat: e.position.lat, lng: e.position.lng},
             map: this.map,
             icon: 'img/marker/cyclesmarker.png'
           });
 
-          // Affichage des informations
-          this.marker.addListener('click', () => {
+          // Affichage des informations concernant les stations de vélos.
+          marker.addListener('click', () => {
             this.stationName.innerHTML = e.name;
             this.stationAdress.innerHTML = e.address;
             this.bikeStands.innerHTML = ` ${e.bike_stands} places`;
-            this.availableBikes.innerHTML = `${e.available_bikes} vélo(s) disponible(s) `;
+            this.availableBikes.innerHTML = `${e.available_bikes} vélo(s) disponible(s)`;
           });
         });
 

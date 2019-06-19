@@ -6,12 +6,14 @@ const Countdown = {
 	counter: undefined,
 	minutes : 0,
 	secondes: 0,
+	millisecondes: 0,
 	interval: undefined,
 
 	init(deadLine = new Date().getTime()) {
 		this.counter = document.getElementById('countdown');
 		this.deadLine = deadLine;
 		this.timer = 1200000;
+		this.millisecondes = 60000;
 
 		this.interval = setInterval(() => {
 			this.decompte();
@@ -25,15 +27,16 @@ const Countdown = {
 		// Différence entre le temps de la réservation et l'heure actuelle
 		this.distance = (this.deadLine + this.timer) - this.currentTime;
 
-		this.minutes = Math.floor((this.distance % (1000 * 60 * 60)) / (1000 * 60));
-		this.secondes = Math.floor((this.distance % (1000 * 60)) / 1000);
+		// Conversion millisecondes en minutes et secondes
+		this.minutes = Math.floor(this.distance  / this.millisecondes);
+		this.secondes = Math.floor(this.distance % this.millisecondes / 1000);
 
 		this.counter.innerHTML = `Temps restant  ${this.minutes} minutes et ${this.secondes} secondes`;
 
 		// Stockage du compte à rebours dans le sessionStorage
 		sessionStorage.setItem('deadLine', this.deadLine);
 
-		if (this.distance < 0) {
+		if (this.distance === 0) {
 			clearInterval(this.interval);
 			this.counter.innerHTML = `La réservation a expirée.`;
 		}
